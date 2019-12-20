@@ -1,7 +1,8 @@
 <template>
+
 <el-container>
     <el-aside>
-        left
+        <home-left style='height:100vh;background-color:#353b4e'></home-left>
     </el-aside>
 <el-container>
     <el-header>header</el-header>
@@ -11,8 +12,11 @@
 </template>
 
 <script>
+import homeLeft from '../../components/home/home-left'
 export default {
-
+  components: {
+    'home-left': homeLeft
+  }
 }
 </script>
 
