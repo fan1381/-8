@@ -1,5 +1,13 @@
 <template>
-  <div>主页</div>
+<el-container>
+    <el-aside>
+        left
+    </el-aside>
+<el-container>
+    <el-header>header</el-header>
+    <el-main>zhuyao</el-main>
+</el-container>
+</el-container>
 </template>
 
 <script>
