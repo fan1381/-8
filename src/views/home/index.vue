@@ -1,5 +1,3 @@
-
-// home页根组件
 <template>
   <el-container>
     <el-aside style="width:230px">
@@ -17,13 +15,13 @@
 </template>
 
 <script>
-import homeLeft from '../../components/home/home-left'
-import homeHeader from '../../components/home/home-header'
+// import homeLeft from '../../components/home/home-left'
+// import homeHeader from '../../components/home/home-header'
 export default {
-  components: {
-    'home-left': homeLeft,
-    'home-header': homeHeader
-  }
+  // components: {
+  //   'home-left': homeLeft,
+  //   'home-header': homeHeader
+  // }
 }
 </script>
 
