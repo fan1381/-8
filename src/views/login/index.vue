@@ -66,9 +66,15 @@ export default {
   },
   methods: {
     login_submit () {
-      this.$refs.myForm.validate(function (isok) {
+      this.$refs.myForm.validate((isok) => {
         if (isok) {
-          console.log('登录成功')
+          this.$axios({
+            url: '/authorizations',
+            method: 'post',
+            data: this.loginForm
+          }).then(res => {
+            window.localStorage.setItem('user-token', res.data.data.token)
+          }).catch(res => {})
         }
       })
     }
