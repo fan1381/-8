@@ -74,7 +74,10 @@ export default {
             data: this.loginForm
           }).then(res => {
             window.localStorage.setItem('user-token', res.data.data.token)
-          }).catch(res => {})
+            this.$router.push('/home')
+          }).catch(res => {
+            this.$message.error('用户名或验证码错了哦')
+          })
         }
       })
     }
