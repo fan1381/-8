@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+import './permission/index'
 import router from './router'
 import ElementUI from 'element-ui' // 引入UI
 import Component from './components/index'
