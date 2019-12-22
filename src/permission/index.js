@@ -1,4 +1,5 @@
 import router from '../router'
+// import axios from 'axios'
 router.beforeEach(function (to, from, next) {
   if (to.path.startsWith('/home')) {
     let token = window.localStorage.getItem('user-token')

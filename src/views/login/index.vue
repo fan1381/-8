@@ -75,9 +75,8 @@ export default {
           }).then(res => {
             window.localStorage.setItem('user-token', res.data.data.token)
             this.$router.push('/home')
-          }).catch(res => {
-            this.$message.error('用户名或验证码错了哦')
           })
+          // 由于错误信息都在request里面写着，所以此处不必再写，不然会提示两个错误消息
         }
       })
     }
