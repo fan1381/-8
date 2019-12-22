@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-aside style="width:230px">
-      <home-left style="height:100vh;background-color:#353b4e"></home-left>
+      <home-left style="height:100%;background-color:#353b4e"></home-left>
     </el-aside>
     <el-container>
       <!-- 头部区域 -->
