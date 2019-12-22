@@ -6,7 +6,7 @@ axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
 // 请求拦截器，第一个参数执行成功时调用，第二个是失败时调用
 axios.interceptors.request.use(function (config) {
   let token = window.localStorage.getItem('user-token')
-  config.headers.Authorization = `Bearer ${token}`
+  config.headers.Authorization = `Bearer ${token}` // 注入token
   return config
 }, function () {
 

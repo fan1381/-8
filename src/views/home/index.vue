@@ -4,12 +4,14 @@
       <home-left style="height:100vh;background-color:#353b4e"></home-left>
     </el-aside>
     <el-container>
+      <!-- 头部区域 -->
       <el-header>
-        <home-header>
-
-        </home-header>
+        <home-header></home-header>
       </el-header>
-      <el-main>zhuyao</el-main>
+      <!-- 主要区域 -->
+      <el-main>
+<router-view></router-view>
+        </el-main>
     </el-container>
   </el-container>
 </template>

@@ -73,7 +73,7 @@ export default {
             method: 'post',
             data: this.loginForm
           }).then(res => {
-            window.localStorage.setItem('user-token', res.data.data.token)
+            window.localStorage.setItem('user-token', res.data.token)
             this.$router.push('/home')
           })
           // 由于错误信息都在request里面写着，所以此处不必再写，不然会提示两个错误消息

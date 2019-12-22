@@ -12,7 +12,12 @@ const routes = [{
 {
   path: '/home',
   name: 'home',
-  component: Home
+  component: Home,
+  children: [{
+    path: 'comment',
+    component: () =>
+                import('../views/comment')
+  }]
 }, {
   path: '/login',
   component: Login
