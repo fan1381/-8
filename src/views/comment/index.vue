@@ -55,7 +55,7 @@ export default {
         this.$axios({
           method: 'put',
           url: 'comments/status',
-          params: { article_id: row.id },
+          params: { article_id: row.id.toString() },
           data: { allow_comment: !row.comment_status } // 取反状态，若果是打开就得是关闭
         }).then(res => {
           this.getComment()
