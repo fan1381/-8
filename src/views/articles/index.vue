@@ -1,0 +1,17 @@
+<template>
+  <el-card>
+      <crumb slot="header">
+          <template slot="title">文章列表</template>
+      </crumb>
+  </el-card>
+</template>
+
+<script>
+export default {
+
+}
+</script>
+
+<style>
+
+</style>
