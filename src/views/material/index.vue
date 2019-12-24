@@ -10,8 +10,8 @@
           <el-card class="img-card" v-for="item in list" :key="item.id">
             <img :src="item.url" alt />
             <el-row class="ico" type="flex" justify="space-around" align="middle">
-              <i class="el-icon-star-on"></i>
-              <i class="el-icon-delete-solid"></i>
+              <i  @click="color(item)" :style="{color: item.is_collected ? 'red':'#000'}"  class="el-icon-star-on"></i>
+              <i @click="del(item.id)" class="el-icon-delete-solid"></i>
             </el-row>
           </el-card>
         </div>
@@ -21,9 +21,10 @@
         <div class="img-list">
           <el-card class="img-card" v-for="item in list" :key="item.id">
             <img :src="item.url" alt />
+
             <el-row class="ico" type="flex" justify="space-around" align="middle">
-              <i class="el-icon-star-on"></i>
-              <i class="el-icon-delete-solid"></i>
+              <i  @click="color(item)" :style="{color: item.is_collected ? 'red':'#000'}" class="el-icon-star-on"></i>
+              <i  @click="del(item.id)" class="el-icon-delete-solid"></i>
             </el-row>
           </el-card>
         </div>
@@ -53,6 +54,29 @@ export default {
     }
   },
   methods: {
+    //   删除图片
+    del (id) {
+      this.$confirm('确定要删除吗？').then(() => {
+        this.$axios({
+          method: 'delete',
+          url: `/user/images/${id}`
+        }).then(() => {
+          this.get()
+        })
+      })
+    },
+    //   点击收藏变颜色
+    color (item) {
+      this.$axios({
+        url: `/user/images/${item.id}`,
+        method: 'put',
+        data: {
+          collect: !item.is_collected
+        }
+      }).then(res => {
+        this.get()
+      })
+    },
     changePage (newPage) {
       this.page.currentPage = newPage
       this.get()
@@ -102,6 +126,9 @@ export default {
       bottom: 0;
       font-size: 23px;
       background-color: #f4f5f6;
+      i{
+          cursor: pointer;
+      }
     }
   }
 }

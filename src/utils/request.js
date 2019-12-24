@@ -14,7 +14,7 @@ axios.interceptors.request.use(function (config) {
 })
 
 axios.defaults.transformResponse = [function (data) {
-  let res = JSONBig.parse(data)
+  let res = data ? JSONBig.parse(data) : {}
   return res
 }]
 
