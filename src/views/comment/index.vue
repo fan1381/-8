@@ -21,7 +21,7 @@
     <!-- current-page  默认页码 -->
      <!-- @current-change  监听事件，点击切换页数 -->
     <el-row type="flex" style="height:80px" justify="center" align="middle">
-      <el-pagination background layout="prev, pager, next" :page-size="pageSize" :total="page.total" :current-page="currentPage" @current-change='changePage'></el-pagination>
+      <el-pagination background layout="prev, pager, next" :page-size="this.pageSize" :total="this.page.total" :current-page="currentPage" @current-change='changePage'></el-pagination>
     </el-row>
   </el-card>
 </template>
