@@ -155,6 +155,7 @@ export default {
       // 发请求
       this.getArticles(params)
     },
+    // 获取频道
     getChannels () {
       this.$axios({
         url: '/channels'
