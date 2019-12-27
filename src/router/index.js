@@ -25,7 +25,7 @@ const routes = [{
     path: 'articles',
     component: () =>
                 import('../views/articles')
-  }]
+  } ]
 }, {
   path: '/login',
   component: Login

@@ -7,7 +7,7 @@
     <el-form style="padding-left:50px">
       <el-form-item label="文章状态:">
         <!-- 单选组 -->
-        <el-radio-group v-model="searchForm.status">
+        <el-radio-group v-model="searchForm.status" @change='changeConditon'>
           <el-radio :label="5">全部</el-radio>
           <el-radio :label="0">草稿</el-radio>
           <el-radio :label="1">待审核</el-radio>
@@ -16,12 +16,12 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="频道列表:">
-        <el-select placeholder="请选择频道" v-model="searchForm.channel_id">
+        <el-select @change="changeConditon" placeholder="请选择频道" v-model="searchForm.channel_id">
           <el-option v-for="item in channels" :key="item.id" :label="item.name" :value="item.id"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="时间选择:">
-        <el-date-picker type="daterange" v-model="searchForm.dateRange"></el-date-picker>
+        <el-date-picker @change="changeConditon" value-format="yyyy-MM-dd" type="daterange" v-model="searchForm.dateRange"></el-date-picker>
       </el-form-item>
     </el-form>
     <!-- 主题内容 -->
@@ -96,6 +96,16 @@ export default {
   },
   //   获取所有频道
   methods: {
+    // 筛选文章，筛选条件，都可以调用这个方法
+    changeConditon () {
+      let params = { status: this.searchForm.status === 5 ? null : this.searchForm.status, //  文章状态
+        channel_id: this.searchForm.channel_id, //  频道选项
+        begin_pubdate: this.searchForm.dateRange.length ? this.searchForm.dateRange[0] : null, // 开始时间
+        end_pubdate: this.searchForm.dateRange.length > 1 ? this.searchForm.dateRange[1] : null //  结束时间
+      }
+      // 发请求
+      this.getArticles(params)
+    },
     getChannels () {
       this.$axios({
         url: '/channels'
@@ -103,10 +113,11 @@ export default {
         this.channels = res.data.channels
       })
     },
-    // 获取文章列表
-    getArticles () {
+    // 获取文章列表 和 筛选文章状态
+    getArticles (params) {
       this.$axios({
-        url: '/articles'
+        url: '/articles',
+        params
       }).then(res => {
         this.list = res.data.results
       })
