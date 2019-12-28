@@ -82,13 +82,15 @@ export default {
         this.channels = res.data.channels
       })
     },
-    // 发布文章
+    // 发布文章 存到草稿
     publishArticle (draft) {
       this.$refs.myFormData.validate(isOk => {
         if (isOk) {
+          // 判断是修改文章还是发布文章
+          let { articleId } = this.$route.params // 获取动态路由参数
           this.$axios({
-            url: '/articles',
-            method: 'post',
+            url: articleId ? `/articles/${articleId}` : '/articles',
+            method: articleId ? 'put' : 'post',
             params: { draft }, // 查询参数
             data: this.formData // 请求体参数
           }).then(res => {
@@ -98,6 +100,19 @@ export default {
             })
             this.$router.push('/home/articles')
           })
+
+          // this.$axios({
+          //   url: '/articles',
+          //   method: 'post',
+          //   params: { draft }, // 查询参数
+          //   data: this.formData // 请求体参数
+          // }).then(res => {
+          //   this.$message({
+          //     type: 'success',
+          //     message: '保存成功'
+          //   })
+          //   this.$router.push('/home/articles')
+          // })
         }
       })
     },
@@ -112,7 +127,7 @@ export default {
   },
   created () {
     this.getChannels()
-    let { articleId } = this.$route.params
+    let { articleId } = this.$route.params // 获取动态路由参数
     articleId && this.getArticleById(articleId) // 如果id存在，直接查询文章数据
   }
 }
