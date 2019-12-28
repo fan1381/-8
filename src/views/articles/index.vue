@@ -44,7 +44,7 @@
         </div>
       </div>
       <div class="right">
-        <span>
+        <span @click="toModify(item.id)">
           <i class="el-icon-edit"></i>修改
         </span>
         <span @click="del(item.id)">
@@ -117,6 +117,10 @@ export default {
   },
   //   获取所有频道
   methods: {
+    // 修改文章
+    toModify (id) {
+      this.$router.push(`/home/publish/${id.toString()}`)
+    },
     // 点击切换分页
     changePage (newPage) {
       this.page.currentPage = newPage

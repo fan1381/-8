@@ -55,6 +55,24 @@ export default {
       }
     }
   },
+  watch: {
+    // 两个地址用一个组价跳转的时候，组件不销毁，但是数据不重置的问题
+    $route: function (to, form) {
+      if (to.params.articleId) {
+      //  articleId存在 是修改
+      } else {
+        this.formData = {
+          title: '', // 文章标题
+          content: '', // 文章内容
+          cover: {
+            type: 0, // 封面类型 -1自动，0无图，1一张，3三张
+            images: [] // 放在地址封面的数组
+          },
+          channel_id: null // 频道id
+        }
+      }
+    }
+  },
   methods: {
     // 获取频道列表
     getChannels () {
@@ -82,10 +100,20 @@ export default {
           })
         }
       })
+    },
+    // 通过id查询文章数据
+    getArticleById (articleId) {
+      this.$axios({
+        url: `/articles/${articleId}`
+      }).then(res => {
+        this.formData = res.data
+      })
     }
   },
   created () {
     this.getChannels()
+    let { articleId } = this.$route.params
+    articleId && this.getArticleById(articleId) // 如果id存在，直接查询文章数据
   }
 }
 </script>
