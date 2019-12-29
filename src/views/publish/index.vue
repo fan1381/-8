@@ -11,14 +11,18 @@
       <el-form-item prop="content" label="内容">
         <quill-editor style="height:300px"  v-model="formData.content"> ></quill-editor>
       </el-form-item>
-      <el-form-item label="封面" style="margin-top:150px " >
-        <el-radio-group v-model="formData.cover.type" >
+      <el-form-item label="封面" style="margin-top:150px " prop="cover" >
+        <el-radio-group @change="channeType"  v-model="formData.cover.type" >
           <el-radio label="1">单图</el-radio>
           <el-radio label="3">三图</el-radio>
           <el-radio label="0">无图</el-radio>
           <el-radio label="-1">自动</el-radio>
         </el-radio-group>
+          <!-- {{ formData.cover }} -->
       </el-form-item>
+      <!-- 封面 -->
+      <cover-image :list='formData.cover.images'></cover-image>
+      <!-- 频道 -->
       <el-form-item  prop="channel_id" label="频道">
         <el-select  v-model="formData.channel_id">
           <el-option v-for="item in channels" :key="item.id" :value="item.id" :label="item.name"></el-option>
@@ -33,6 +37,7 @@
 </template>
 
 <script>
+// import { type } from 'os'
 export default {
   data () {
     return {
@@ -51,11 +56,22 @@ export default {
         title: [{ required: true, message: '文章标题不能为空' }, { min: 5, max: 30, message: '标题的长度应该在5-30之间' }],
         content: [{ required: true, message: '文章内容不能为空' }],
         channel_id: [{ required: true, message: '文章频道不能为空' }]
-
       }
     }
   },
   watch: {
+    // 监听 封面类型的改变
+    // 'formData.cover.type': function () {
+    //   this.formData.cover.type = parseInt(this.formData.cover.type)
+    //   if (this.formData.cover.type === 0 || this.formData.cover.type === -1) {
+    //     this.formData.cover.images = [] // 无图或者自动
+    //   } else if (this.formData.cover.type === 1) {
+    //     this.formData.cover.images = [''] // 单图
+    //   } else if (this.formData.cover.type === 3) {
+    //     this.formData.cover.images = ['', '', ''] // 3图
+    //   }
+    //   // alert(this.formData.cover.type)
+    // },
     // 两个地址用一个组价跳转的时候，组件不销毁，但是数据不重置的问题
     $route: function (to, form) {
       if (to.params.articleId) {
@@ -72,8 +88,19 @@ export default {
         }
       }
     }
+
   },
   methods: {
+    channeType () {
+      this.formData.cover.type = parseInt(this.formData.cover.type)
+      if (this.formData.cover.type === 0 || this.formData.cover.type === -1) {
+        this.formData.cover.images = [] // 无图或者自动
+      } else if (this.formData.cover.type === 1) {
+        this.formData.cover.images = [''] // 单图
+      } else if (this.formData.cover.type === 3) {
+        this.formData.cover.images = ['', '', ''] // 3图
+      }
+    },
     // 获取频道列表
     getChannels () {
       this.$axios({
