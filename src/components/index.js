@@ -3,6 +3,8 @@ import homeHeader from './home/home-header.vue'
 import crumb from './common/crumb.vue' // 全局注册面包屑
 import { quillEditor } from 'vue-quill-editor' // 富文本编辑器
 import CoverImage from './publish/cover-image.vue'
+import selectImage from './publish/select-image.vue' // 上传图片
+
 // import { Form } from 'element-ui'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
@@ -14,5 +16,6 @@ export default {
     Vue.component('crumb', crumb)
     Vue.component('quill-editor', quillEditor)
     Vue.component('cover-image', CoverImage)
+    Vue.component('select-image', selectImage)
   }
 }

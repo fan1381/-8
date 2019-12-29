@@ -21,7 +21,7 @@
           <!-- {{ formData.cover }} -->
       </el-form-item>
       <!-- 封面 -->
-      <cover-image :list='formData.cover.images'></cover-image>
+      <cover-image @selectTwoImg='receiveImg' :list='formData.cover.images'></cover-image>
       <!-- 频道 -->
       <el-form-item  prop="channel_id" label="频道">
         <el-select  v-model="formData.channel_id">
@@ -91,6 +91,17 @@ export default {
 
   },
   methods: {
+    // 接收方法
+    receiveImg (url, index) {
+      // alert(url)
+      // this.formData.cover.images.map(function (item, i) {
+      //   if (index === i) {
+      //     return url // 说明找到了要替换的地址
+      //   }
+      //   return item // 没有找到返回原理的数据
+      // })
+      this.formData.cover.images = this.formData.cover.images.map((item, i) => i === index ? url : item)
+    },
     channeType () {
       this.formData.cover.type = parseInt(this.formData.cover.type)
       if (this.formData.cover.type === 0 || this.formData.cover.type === -1) {
