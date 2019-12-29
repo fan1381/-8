@@ -20,7 +20,13 @@
         ></el-pagination>
       </el-row>
     </el-tab-pane>
-    <el-tab-pane label="上传图片" name="ublad">配置管理</el-tab-pane>
+    <!-- 上传图片 -->
+    <el-tab-pane label="上传图片" name="upload">
+      <!-- 给action不报错 -->
+      <el-upload action :http-request="uploadImg" class="upload-img" :show-file-list="false">
+        <i class="el-icon-plus"></i>
+      </el-upload>
+    </el-tab-pane>
   </el-tabs>
 </template>
 
@@ -38,6 +44,18 @@ export default {
     }
   },
   methods: {
+    // 上传图片
+    uploadImg (params) {
+      let data = new FormData()
+      data.append('image', params.file) // 加入参数
+      this.$axios({
+        url: '/user/images',
+        method: 'post',
+        data
+      }).then(res => {
+        this.$emit('selectOneImg', res.data.url)
+      })
+    },
     clickImg (url) {
       this.$emit('selectOneImg', url)
       // alert(url)
@@ -76,11 +94,20 @@ export default {
   .img-card {
     width: 150px;
     height: 150px;
-margin: 20px 0;
+    margin: 20px 0;
     img {
       width: 100%;
       height: 100%;
     }
+  }
+}
+.upload-img{
+  display: flex;
+  justify-content: center;
+  i{
+    font-size: 50px;
+    padding: 50px;
+    border: 1px dashed #ccc
   }
 }
 </style>
