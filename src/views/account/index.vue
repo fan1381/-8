@@ -29,6 +29,8 @@
 </template>
 
 <script>
+// 公共实例用来更新头像
+import eventBus from '../../utils/eventBus'
 export default {
   data () {
     return {
@@ -79,6 +81,8 @@ export default {
             type: 'success',
             message: '保存用户信息成功'
           })
+          // 保存成功后，通知header组价去更新头像
+          eventBus.$emit('updateUserInfo')
         })
       })
     },

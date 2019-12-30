@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import eventBus from '../../utils/eventBus'
 export default {
   data () {
     return {
@@ -40,8 +41,19 @@ export default {
     }).then(res => {
       this.userInfo = res.data
     })
+    eventBus.$on('updateUserInfo', () => {
+      this.getInfo()
+    })
   },
   methods: {
+    // 封装方法
+    getInfo () {
+      this.$axios({
+        url: '/user/profile'
+      }).then(res => {
+        this.userInfo = res.data
+      })
+    },
     click (command) {
       // this.$message('触发了' + command)
       if (command === 'info') {
