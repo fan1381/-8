@@ -43,9 +43,9 @@ export default {
   },
   methods: {
     click (command) {
-      this.$message('触发了' + command)
+      // this.$message('触发了' + command)
       if (command === 'info') {
-
+        this.$router.push('/home/account')
       } else if (command === 'git') {
         window.location.href = 'https://github.com/fan1381/-8'
       } else {

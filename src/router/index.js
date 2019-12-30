@@ -33,6 +33,10 @@ const routes = [{
     path: 'publish/:articleId', // 修改文章
     component: () =>
                 import('../views/publish')
+  }, {
+    path: 'account', // 账户信息
+    component: () =>
+                import('../views/account')
   }]
 }, {
   path: '/login',
