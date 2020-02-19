@@ -69,6 +69,7 @@ export default {
     //     this.formData.cover.images = [''] // 单图
     //   } else if (this.formData.cover.type === 3) {
     //     this.formData.cover.images = ['', '', ''] // 3图
+
     //   }
     //   // alert(this.formData.cover.type)
     // },

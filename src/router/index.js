@@ -37,6 +37,10 @@ const routes = [{
     path: 'account', // 账户信息
     component: () =>
                 import('../views/account')
+  }, {
+    path: 'picture', // 账户信息
+    component: () =>
+                import('../views/picture')
   }]
 }, {
   path: '/login',

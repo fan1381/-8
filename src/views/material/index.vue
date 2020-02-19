@@ -1,50 +1,68 @@
 <template>
-  <el-card v-loading='loading'>
+  <el-card v-loading="loading">
     <crumb slot="header">
       <template slot="title">素材管理</template>
     </crumb>
     <!-- 上传 -->
 
-        <el-row type="flex" justify="end">
-            <el-upload action="" :http-request="uploadImg">
-<el-button type="primary">上传图片</el-button>
-    </el-upload>
-
-        </el-row>
+    <el-row type="flex" justify="end">
+      <el-upload action :http-request="uploadImg">
+        <el-button type="primary">上传图片</el-button>
+      </el-upload>
+    </el-row>
     <el-tabs v-model="activeName" @tab-click="changeTap">
       <el-tab-pane label="全部图片" name="all">
         <!-- 显示图片 -->
         <div class="img-list">
-          <el-card class="img-card" v-for="item in list" :key="item.id">
-            <img :src="item.url" alt />
+          <el-card class="img-card" v-for="(item,index) in list" :key="item.id">
+            <img @click="clickImg(index)" :src="item.url" alt />
             <el-row class="ico" type="flex" justify="space-around" align="middle">
-              <i  @click="color(item)" :style="{color: item.is_collected ? 'red':'#000'}"  class="el-icon-star-on"></i>
+              <i
+                @click="color(item)"
+                :style="{color: item.is_collected ? 'red':'#000'}"
+                class="el-icon-star-on"
+              ></i>
               <i @click="del(item.id)" class="el-icon-delete-solid"></i>
             </el-row>
           </el-card>
         </div>
-
       </el-tab-pane>
       <el-tab-pane label="收藏图片" name="collect">
         <div class="img-list">
-          <el-card class="img-card" v-for="item in list" :key="item.id">
+          <el-card class="img-card" v-for="(item,i) in list" :key=" i ">
             <img :src="item.url" alt />
 
             <el-row class="ico" type="flex" justify="space-around" align="middle">
-              <i  @click="color(item)" :style="{color: item.is_collected ? 'red':'#000'}" class="el-icon-star-on"></i>
-              <i  @click="del(item.id)" class="el-icon-delete-solid"></i>
+              <i
+                @click="color(item)"
+                :style="{color: item.is_collected ? 'red':'#000'}"
+                class="el-icon-star-on"
+              ></i>
+              <i @click="del(item.id)" class="el-icon-delete-solid"></i>
             </el-row>
           </el-card>
         </div>
       </el-tab-pane>
     </el-tabs>
-     <!-- 分页组件 -->
-        <el-row type="flex" justify="center">
-          <el-pagination background layout="prev, pager, next" :total="page.total"
-          :current-page="page.currentPage" :page-size="pageSize" @current-change='changePage'>
-
-          </el-pagination>
-        </el-row>
+    <!-- 分页组件 -->
+    <el-row type="flex" justify="center">
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="page.total"
+        :current-page="page.currentPage"
+        :page-size="pageSize"
+        @current-change="changePage"
+      ></el-pagination>
+    </el-row>
+    <!-- 弹层 -->
+    <el-dialog @opened='openEnd' :visible="dialog" @close="dialog=false">
+      <el-carousel ref="myCarousel" :interval="4000" type="card" height="300px">
+        <el-carousel-item v-for="(item,index) in list" :key="index">
+          <img style="width:100%;height:100%" :src="item.url" alt />
+        </el-carousel-item>
+      </el-carousel>
+    </el-dialog>
   </el-card>
 </template>
 
@@ -52,6 +70,7 @@
 export default {
   data () {
     return {
+      dialog: false,
       loading: false,
       activeName: 'all', // 默认选中全部或收藏
       list: [],
@@ -59,10 +78,19 @@ export default {
         currentPage: 1, // 默认第一页
         pageSize: 8, // 一页显示多少
         total: 0 // 总页数
-      }
+      },
+      clickIndex: -1
     }
   },
   methods: {
+    openEnd () {
+      this.$refs.myCarousel.setActiveItem(this.clickIndex)
+    },
+    // 点击图片
+    clickImg (index) {
+      this.dialog = true
+      this.clickIndex = index
+    },
     //   上传图片
     uploadImg (params) {
       let data = new FormData()
@@ -115,7 +143,8 @@ export default {
         params: {
           page: this.page.currentPage,
           per_page: this.page.pageSize,
-          collect: this.activeName === 'collect' }
+          collect: this.activeName === 'collect'
+        }
       }).then(res => {
         this.list = res.data.results
         this.page.total = res.data.total_count
@@ -149,8 +178,8 @@ export default {
       bottom: 0;
       font-size: 23px;
       background-color: #f4f5f6;
-      i{
-          cursor: pointer;
+      i {
+        cursor: pointer;
       }
     }
   }

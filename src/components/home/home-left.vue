@@ -16,7 +16,7 @@
         <!-- 粉丝管理 -->
          <el-submenu index='2'>
              <template slot="title">粉丝管理</template>
-             <el-menu-item>图文数据</el-menu-item>
+             <el-menu-item index="/home/picture" >图文数据</el-menu-item>
              <el-menu-item>粉丝概况</el-menu-item>
              <el-menu-item>粉丝画像</el-menu-item>
              <el-menu-item>粉丝列表</el-menu-item>
